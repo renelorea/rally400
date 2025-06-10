@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
+#categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.category {
+    margin: 10px;
+}
+button {
+    padding: 10px;
+    cursor: pointer;
+    background-color: gray;
+    border: none;
+    color: white;
+}
+.hidden {
+    display: none;
+}
+
+#feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.correct {
+    background-color: green;
+}
+
+.incorrect {
+    background-color: red;
+}
+#gameLogo {
+    width: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+#questionImage {
+    max-width: 300px;
+    display: block;
+    margin: 10px auto;
+}
+
+.hidden {
+    display: none;
+}

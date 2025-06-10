@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas CECYTON</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="Jeopardy Logo" id="gameLogo">
+    </header>
+    <h1>Preguntas CECYTON</h1>
+    <div id="score">
+        <p>Jugador 1: <span id="points1">0</span> puntos</p>
+        <!-- <p>Jugador 2: <span id="points2">0</span> puntos</p> -->
+        <p>Turno de: <span id="currentPlayer">Jugador 1</span></p>
+    </div>
+    <div id="categories"></div>
+    <div id="questionBox" class="hidden">
+        <img id="questionImage" class="hidden" src="" alt="Imagen de la pregunta">
+        <h2 id="question"></h2>
+        <div id="answers"></div>
+        <button onclick="closeQuestion()">Cerrar</button>
+    </div>
+    <div id="feedback" class="hidden"></div>
+    <audio id="correctSound" src="correct.mp3"></audio>
+    <audio id="incorrectSound" src="wrong.mp3"></audio>
+
+    <script src="scripts2.js"></script>
+</body>
+</html>
