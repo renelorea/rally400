@@ -59,3 +59,15 @@ button {
 .hidden {
     display: none;
 }
+
+#gameLogo {
+    width: 200px;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    font-size: 18px;
+}

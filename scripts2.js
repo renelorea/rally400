@@ -16,7 +16,9 @@ const categories = [
     ]}
 ];
 
-
+categories.forEach(category => {
+    category.originalQuestions = category.questions.map(q => ({ ...q })); // Guardar copia inicial
+});
 
 
 let scores = [0, 0];
@@ -49,29 +51,33 @@ function displayCategories() {
 
 function showQuestion(catIndex, qIndex) {
     const questionBox = document.getElementById("questionBox");
-    questionBox.classList.remove("hidden");
+    questionBox.classList.remove("d-none"); // Mostrar el contenedor con Bootstrap
 
     const questionData = categories[catIndex].questions[qIndex];
     document.getElementById("question").textContent = questionData.text;
 
-    // Mostrar imagen si existe
     const imgElement = document.getElementById("questionImage");
     if (questionData.image) {
         imgElement.src = questionData.image;
-        imgElement.classList.remove("hidden");
+        imgElement.classList.remove("d-none"); // Mostrar la imagen si hay una
     } else {
-        imgElement.classList.add("hidden");
+        imgElement.classList.add("d-none"); // Ocultar si no hay imagen
     }
 
     const answersDiv = document.getElementById("answers");
     answersDiv.innerHTML = "";
+
     questionData.answers.forEach((answer, index) => {
         const btn = document.createElement("button");
         btn.textContent = answer;
+        btn.classList.add("btn", "btn-secondary", "w-100");
         btn.onclick = () => checkAnswer(index, questionData, catIndex, qIndex);
         answersDiv.appendChild(btn);
     });
-}function showFeedback(isCorrect) {
+}
+
+
+function showFeedback(isCorrect) {
     const feedback = document.getElementById("feedback");
     feedback.textContent = isCorrect ? "¡Correcto!" : "¡Incorrecto!";
     feedback.className = isCorrect ? "correct" : "incorrect";
@@ -140,14 +146,26 @@ function showWinAnimation() {
 function resetGame() {
     score = 0;
     document.getElementById("points1").textContent = score;
-    
-    // Restaurar preguntas originales
+
+    // Restaurar preguntas desde la copia original
     categories.forEach(category => {
         category.questions = category.originalQuestions.map(q => ({ ...q }));
     });
 
     displayCategories();
+
+    // Efecto Bootstrap en el botón de reinicio
+    const resetBtn = document.querySelector(".btn-warning");
+    resetBtn.classList.add("btn-danger");
+    resetBtn.textContent = "Reiniciando...";
+    
+    setTimeout(() => {
+        resetBtn.classList.remove("btn-danger");
+        closeQuestion();
+        resetBtn.textContent = "Reiniciar Juego";
+    }, 500);
 }
+
 
 
 /* function showWinAnimation() {
@@ -167,11 +185,39 @@ function resetGame() {
 }
  */
 function closeQuestion() {
-    document.getElementById("questionBox").classList.add("hidden");
+    document.getElementById("questionBox").classList.add("d-none"); // Bootstrap usa "d-none"
 }
+
 
 function disableGame() {
     document.getElementById("categories").innerHTML = "<h2>Juego terminado</h2>";
 }
+
+function displayCategories() {
+    const categoryDiv = document.getElementById("categories");
+    categoryDiv.innerHTML = "";
+
+    categories.forEach((category, catIndex) => {
+        if (category.questions.length === 0) return;
+
+        const div = document.createElement("div");
+        div.classList.add("col-md-4", "text-center", "mb-3");
+
+        div.innerHTML = `<h3>${category.name}</h3>`;
+        
+        category.questions.forEach((q, qIndex) => {
+            const button = document.createElement("button");
+            button.classList.add("btn", "btn-secondary", "w-100");
+            button.textContent = `${q.points} pts`;
+            button.dataset.catIndex = catIndex;
+            button.dataset.qIndex = qIndex;
+            button.onclick = () => showQuestion(catIndex, qIndex);
+            div.appendChild(button);
+        });
+
+        categoryDiv.appendChild(div);
+    });
+}
+
 
 window.onload = displayCategories;
